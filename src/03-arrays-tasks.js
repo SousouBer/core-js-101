@@ -200,8 +200,8 @@ function getTail(arr, n) {
  *    +'20,21,22,23,24\n'
  *    +'30,31,32,33,34'
  */
-function toCsvText(/* arr */) {
-  throw new Error('Not implemented');
+function toCsvText(arr) {
+  return arr.map((item) => item.join(',')).join('\n');
 }
 
 /**
@@ -234,8 +234,14 @@ function toArrayOfSquares(arr) {
  *   [ 0, 0, 0, 0, 0]         => [ 0, 0, 0, 0, 0]
  *   [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ] => [ 1, 3, 6, 10, 15, 21, 28, 36, 45, 55 ]
  */
-function getMovingSum(/* arr */) {
-  throw new Error('Not implemented');
+function getMovingSum(arr) {
+  const newArr = [];
+  arr.reduce((acc, item) => {
+    const value = acc + item;
+    newArr.push(value);
+    return value;
+  }, 0);
+  return newArr;
 }
 
 /**
@@ -290,7 +296,7 @@ function propagateItemsByPositionIndex(arr) {
  *   [ 10, 10, 10, 10 ] => [ 10, 10, 10 ]
  */
 function get3TopItems(arr) {
-  return arr.sort().reverse().slice(0, 3);
+  return arr.reverse().slice(0, 3);
 }
 
 
@@ -480,8 +486,9 @@ function getIdentityMatrix(/* n */) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  const length = end - start + 1;
+  return Array(length).fill(0).map((item, index) => (index === 0 ? start : start + index));
 }
 
 /**
@@ -593,16 +600,11 @@ function getElementByIndexes(arr, indexes) {
  *
  */
 function swapHeadAndTail(arr) {
-  let newArr;
-  const firstHalf = arr.slice(0, arr.length / 2).reverse();
-  const middleEl = arr[(arr.length - 1) / 2];
-  const secondHalf = arr.slice(arr.length / 2, arr.length).reverse();
-  if (arr.length % 2 === 0) {
-    newArr = [...firstHalf, ...secondHalf];
-  } else {
-    newArr = [...firstHalf, middleEl, ...arr.slice((arr.length + 1) / 2, arr.length).reverse()];
+  const middle = Math.trunc(arr.length / 2);
+  if (arr.length % 2) {
+    return [...arr.slice(middle + 1), arr[middle], ...arr.slice(0, middle)];
   }
-  return newArr;
+  return [...arr.slice(middle), ...arr.slice(0, middle)];
 }
 
 
